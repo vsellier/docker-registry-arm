@@ -7,7 +7,7 @@ RUN set -ex \
     && apk add --no-cache make git
 
 WORKDIR /go/src/github.com/docker
-ENV REGISTRY_VERSION=v2.6.1
+ENV REGISTRY_VERSION=master
 
 RUN git clone --single-branch https://github.com/docker/distribution.git -b ${REGISTRY_VERSION}
 WORKDIR $DISTRIBUTION_DIR
