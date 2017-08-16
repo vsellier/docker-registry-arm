@@ -26,7 +26,9 @@ On your local docker, configure the mirror as explained [here](https://docs.dock
 
 | Versions | Official release |
 |----------|------------------|
-| latest   | https://github.com/docker/distribution/releases/tag/v2.6.1 |
+| latest   | https://github.com/docker/distribution/releases/master |
+| 2.6.2    | https://github.com/docker/distribution/releases/tag/v2.6.2 |
 | 2.6.1    | https://github.com/docker/distribution/releases/tag/v2.6.1 |
+
 
 
