@@ -1,10 +1,11 @@
-FROM armhf/golang:1.8-alpine
+FROM golang:1.9
 
 ENV DISTRIBUTION_DIR /go/src/github.com/docker/distribution
 ENV DOCKER_BUILDTAGS include_oss include_gcs
 
 RUN set -ex \
-    && apk add --no-cache make git
+    && apt update && apt install make git  \
+    && rm -rf /var/lib/apt/lists
 
 WORKDIR /go/src/github.com/docker
 ENV GIT_VERSION=master
