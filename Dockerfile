@@ -4,9 +4,9 @@ ENV DOCKER_BUILDTAGS include_oss include_gcs
 
 RUN set -ex \
     && apt update && apt install -y make git 
-    
+
 WORKDIR /go/src/github.com/docker
-ENV GIT_VERSION=master
+ENV GIT_VERSION=v2.7.0-rc.0
 
 RUN git clone --single-branch https://github.com/docker/distribution.git -b ${GIT_VERSION}
 
