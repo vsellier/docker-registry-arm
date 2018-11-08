@@ -1,21 +1,29 @@
-FROM golang:1.9
+FROM golang:1.11 as build
 
-ENV DISTRIBUTION_DIR /go/src/github.com/docker/distribution
 ENV DOCKER_BUILDTAGS include_oss include_gcs
 
 RUN set -ex \
-    && apt update && apt install make git  \
-    && rm -rf /var/lib/apt/lists
-
+    && apt update && apt install -y make git 
+    
 WORKDIR /go/src/github.com/docker
 ENV GIT_VERSION=master
 
 RUN git clone --single-branch https://github.com/docker/distribution.git -b ${GIT_VERSION}
-WORKDIR $DISTRIBUTION_DIR
-RUN mkdir -p /etc/docker/registry && cp -v cmd/registry/config-dev.yml /etc/docker/registry/config.yml
+
+WORKDIR /go/src/github.com/docker/distribution
+
 RUN make PREFIX=/go clean binaries
 
+FROM golang:1.11
+
+RUN mkdir -p /etc/docker/registry
+COPY --from=build /go/src/github.com/docker/distribution/bin/registry /usr/bin/registry
+COPY --from=build /go/src/github.com/docker/distribution/cmd/registry/config-dev.yml /etc/docker/registry/config.yml
+
 VOLUME ["/var/lib/registry"]
+
 EXPOSE 5000
-ENTRYPOINT ["registry"]
+
+ENTRYPOINT ["/usr/bin/registry"]
+
 CMD ["serve", "/etc/docker/registry/config.yml"]
