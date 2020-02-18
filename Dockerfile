@@ -3,7 +3,7 @@ FROM golang:1.13.8 as build
 ENV DOCKER_BUILDTAGS include_oss include_gcs
 
 RUN set -ex \
-    && apt update && apt install -y make git 
+    && apt-get update && apt-get install -y make git 
     
 WORKDIR /go/src/github.com/docker
 ENV GIT_VERSION=master
