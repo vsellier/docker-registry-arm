@@ -1,4 +1,4 @@
-FROM golang:1.13.8 as build
+FROM golang:1.13.9 as build
 
 ENV DOCKER_BUILDTAGS include_oss include_gcs
 
@@ -14,7 +14,7 @@ WORKDIR /go/src/github.com/docker/distribution
 
 RUN make PREFIX=/go clean binaries
 
-FROM golang:1.13.8
+FROM golang:1.13.9
 
 RUN mkdir -p /etc/docker/registry
 COPY --from=build /go/src/github.com/docker/distribution/bin/registry /usr/bin/registry
